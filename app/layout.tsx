@@ -100,7 +100,10 @@ export default async function RootLayout({
       className={`${barlow.variable} ${barlowCondensed.variable} ${bellefair.variable} overflow-x-hidden antialiased`}
       suppressHydrationWarning
     >
-      <body className={barlow.className} suppressHydrationWarning>
+      <body
+        className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable}`}
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="light"
