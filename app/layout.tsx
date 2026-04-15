@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { Resource } from "i18next";
-import { Rubik } from "next/font/google";
+import { Barlow, Barlow_Condensed, Bellefair } from "next/font/google";
 import { headers } from "next/headers";
 import { I18nProvider } from "next-i18next/client";
 import { getT, initServerI18next } from "next-i18next/server";
@@ -11,7 +11,7 @@ import frCommon from "@/app/i18n/locales/fr/common.json";
 import frConnexion from "@/app/i18n/locales/fr/connexion.json";
 import "@/app/globals.css";
 import { ThemeProvider } from "@modules/app/react/ThemeProvider";
-import { Header } from "@modules/app/react/layout/Header";
+import { SpHeader } from "@modules/app/react/layout/SpHeader";
 import { Footer } from "@modules/app/react/layout/Footer";
 
 initServerI18next(i18nConfig);
@@ -32,11 +32,27 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
   "http://localhost:3000";
 
-const rubik = Rubik({
+const barlow = Barlow({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   display: "swap",
-  variable: "--font-rubik",
+  variable: "--font-barlow",
+  adjustFontFallback: true,
+});
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-barlow-condensed",
+  adjustFontFallback: true,
+});
+
+const bellefair = Bellefair({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-bellefair",
   adjustFontFallback: true,
 });
 
@@ -81,10 +97,10 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${rubik.variable} overflow-x-hidden antialiased`}
+      className={`${barlow.variable} ${barlowCondensed.variable} ${bellefair.variable} overflow-x-hidden antialiased`}
       suppressHydrationWarning
     >
-      <body className={rubik.className} suppressHydrationWarning>
+      <body className={barlow.className} suppressHydrationWarning>
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="light"
@@ -96,7 +112,7 @@ export default async function RootLayout({
             supportedLngs={i18nConfig.supportedLngs}
             fallbackLng={i18nConfig.fallbackLng}
           >
-            <Header />
+            <SpHeader />
             {children}
             <Footer />
           </I18nProvider>
