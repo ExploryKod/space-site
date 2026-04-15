@@ -11,7 +11,7 @@ import frCommon from "@/app/i18n/locales/fr/common.json";
 import frConnexion from "@/app/i18n/locales/fr/connexion.json";
 import "@/app/globals.css";
 import { ThemeProvider } from "@modules/app/react/ThemeProvider";
-import { SpHeader } from "@modules/app/react/layout/SpHeader";
+import { SpHeader } from "@/app/_components/layout/SpHeader";
 import { Footer } from "@modules/app/react/layout/Footer";
 
 initServerI18next(i18nConfig);
@@ -90,6 +90,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  const headerList = await headers();
+  const pathname = headerList.get("x-current-path");
+
+  const segments = (pathname ?? "/").split("/").filter(Boolean);
+  if (segments[0] && i18nConfig.supportedLngs.includes(segments[0])) {
+    segments.shift(); // remove locale prefix
+  }
+  const lastPart = segments.at(-1) ?? "home";
+  const page = `page-${lastPart}`;
+
   const lang =
     (await headers()).get(LANG_HEADER) ?? i18nConfig.fallbackLng ?? "en";
   await getT(["common", "connexion"], { lng: lang });
@@ -101,7 +112,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable}`}
+        className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable} ${page}`}
         suppressHydrationWarning
       >
         <ThemeProvider

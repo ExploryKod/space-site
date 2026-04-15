@@ -154,6 +154,11 @@ body {
 
   display: grid;
   grid-template-rows: min-content 1fr;
+  /* background image settings common to all pages */
+  background-size: cover;
+  background-position: bottom center;
+
+  overflow-x: hidden;
 }
 
 /* Header height – use var(--header-height) for layout/positioning */
@@ -212,6 +217,29 @@ body {
   } 
 }
 
+
+/* ----------------------------- */
+/* Page specific layout     */
+/* ----------------------------- */
+
+/* home */
+.page-home {
+  background-image: url(/home/background-home-mobile.jpg);
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 35rem) {
+  .page-home {
+      background-position: center center;
+      background-image: url(/home/background-home-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .page-home {
+      background-image: url(/home/background-home-desktop.jpg);
+  }
+}
 
 /* -----------------------------------------------------------------------------
 Colors
@@ -299,6 +327,81 @@ Typography
 .space-button:focus::after {
   opacity: 1;
   transform: scale(1.5);
+}
+
+/* Primary Navigation */
+
+.primary-navigation {
+  @apply list-none p-0 m-0 z-10 flex flex-row gap-x-8;
+  /* Set the gap between nav text and its underlined indicator */
+  --underline-gap: 2rem;
+  background-color: hsl( var(--color-dark) / .9);
+  transition: transform 500ms ease-in-out;
+}
+
+@supports (backdrop-filter: blur(1.5rem)) {
+  .primary-navigation {
+    background-color: hsl( var(--color-white) / 0.05);
+    backdrop-filter: blur(1.5rem);
+  }
+}
+
+.mobile-nav-toggle {
+  display: none;
+}
+
+@media (max-width: 45rem) {
+  .primary-navigation {
+    --underline-gap: .5rem;
+    @apply fixed inset-[0_0_0_20%] m-0 flex flex-col list-none px-8 pt-[min(20rem,10vh)];
+    transform: translateX(100%);
+  }
+
+  .primary-navigation.underline-indicators > .active {
+    border: 0;
+  }
+
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-toggle {
+    @apply block absolute right-4 top-4 z-20 bg-transparent cursor-pointer;
+    background-image: url("/shared/icon-hamburger.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    aspect-ratio: 1;
+  }
+  
+  /* Focus styles only on focus-visible nav without sacrificing accessibility */
+  .mobile-nav-toggle:focus-visible {
+    outline: 5px solid red;
+    outline-offset: 5px;
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url("/shared/icon-close.svg");
+  }
+}
+
+/* Underline indicators : used for navigation items */
+.underline-indicators > * {
+  cursor: pointer;
+  padding: var(--underline-gap, 1rem) 0;
+  border: 0;
+  border-bottom: .2rem solid hsl( var(--color-white) / 0 );
+}
+
+.underline-indicators > *:hover,
+.underline-indicators > *:focus {
+  border-color: hsl( var(--color-white) / .5);
+}
+
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
+  color: hsl( var(--color-white) / 1);
+  border-color: hsl( var(--color-white) / 1); 
 }
 
 
