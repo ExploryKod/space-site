@@ -4,8 +4,11 @@
 
 :root {
   /* Layout (design sizes; test 320px to large screens for WCAG) */
-  --width-mobile: 375px;
-  --width-desktop: 1440px;
+  --width-sm: 375px;
+
+  --width-md: 48em;
+  --width-lg: 1440px;
+
   --header-height: 0px;
   --footer-height: 0px;
   
@@ -40,7 +43,7 @@
   }
 }
 
-@media (min-width: 45em) {
+@media (min-width: var(--width-md)) {
   :root {
       /* font-sizes */
       --fs-800: 6.25rem;
@@ -148,6 +151,9 @@ body {
   background-color: hsl( var(--color-dark) );
   line-height: 1.5;
   min-height: 100vh;
+
+  display: grid;
+  grid-template-rows: min-content 1fr;
 }
 
 /* Header height – use var(--header-height) for layout/positioning */
@@ -175,30 +181,35 @@ body {
   max-width: 80rem;
 }
 
-.section-container {
+.main-container {
   display: grid;
+  text-align: center;
+  place-items: center;
+  padding-inline: 2rem;
 }
+
 
 /* use em for safari compatibility */
 @media (min-width: 45em) {
-  .section-container {
+  .main-container {
     column-gap: var(--container-gap, 2rem);
-    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(2rem, 1fr);
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr);
   }
 
-  .section-container > *:first-child {
+  .main-container > *:first-child {
       grid-column: 2;
       outline: 1px solid red;
   }
 
-  .section-container > *:last-child {
+  .main-container > *:last-child {
       grid-column: 3;
       outline: 1px solid yellow;
   }
-}
 
-.section-container-fluid {
-  @apply w-full mx-auto;
+  .main-container.main-container--bottom {
+    padding-bottom: max(6rem, 15vh);
+    align-content: end;
+  } 
 }
 
 
@@ -254,7 +265,6 @@ Typography
     font-weight: 700;
     color: hsl( var(--color-white) / .25);
 }
-
 
 /* -----------------------------------------------------------------------------
    Components – consistent patterns (use these classes in the app)
