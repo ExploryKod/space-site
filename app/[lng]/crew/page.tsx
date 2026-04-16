@@ -1,4 +1,5 @@
 import CrewDots from "@/app/_components/molecules/CrewDots";
+import { getT } from "next-i18next/server";
 
 type PageProps = {
   params: Promise<{ lng: string }>;
@@ -16,55 +17,59 @@ type CrewMember = {
   alt: string;
 };
 
-const crewMembers: CrewMember[] = [
-  {
-    slug: "commander",
-    srLabel: "The commander",
-    role: "Commander",
-    name: "Douglas Hurley",
-    description:
-      "Douglas Gerald Hurley is an American engineer, former Marine Corps pilot and former NASA astronaut. He launched into space for the third time as commander of Crew Dragon Demo-2.",
-    image: "/crew/image-douglas-hurley.png",
-    webp: "/crew/image-douglas-hurley.webp",
-    alt: "Douglas Hurley",
-  },
-  {
-    slug: "mission-specialist",
-    srLabel: "The mission specialist",
-    role: "Mission Specialist",
-    name: "Mark Shuttleworth",
-    description:
-      "Mark Richard Shuttleworth is the founder and CEO of Canonical, the company behind the Linux-based Ubuntu operating system. Shuttleworth became the first South African to travel to space as a space tourist.",
-    image: "/crew/image-mark-shuttleworth.png",
-    webp: "/crew/image-mark-shuttleworth.webp",
-    alt: "Mark Shuttleworth",
-  },
-  {
-    slug: "pilot",
-    srLabel: "The pilot",
-    role: "Pilot",
-    name: "Victor Glover",
-    description:
-      "Pilot on the first operational flight of the SpaceX Crew Dragon to the International Space Station. Glover is a commander in the U.S. Navy where he pilots an F/A-18. He was a crew member of Expedition 64, and served as a station systems flight engineer.",
-    image: "/crew/image-victor-glover.png",
-    webp: "/crew/image-victor-glover.webp",
-    alt: "Victor Glover",
-  },
-  {
-    slug: "engineer",
-    srLabel: "The flight engineer",
-    role: "Flight Engineer",
-    name: "Anousheh Ansari",
-    description:
-      "Anousheh Ansari is an Iranian American engineer and co-founder of Prodea Systems. Ansari was the fourth self-funded space tourist, the first self-funded woman to fly to the ISS, and the first Iranian in space.",
-    image: "/crew/image-anousheh-ansari.png",
-    webp: "/crew/image-anousheh-ansari.webp",
-    alt: "Anousheh Ansari",
-  },
-];
-
-export default async function Crew({ searchParams }: PageProps) {
+export default async function Crew({ params, searchParams }: PageProps) {
+  const { lng } = await params;
   const resolvedSearchParams = await searchParams;
+  const { t } = await getT("crew", { lng });
+
+  const crewSlugs: readonly string[] = [
+    "commander",
+    "mission-specialist",
+    "pilot",
+    "engineer",
+  ];
+
+  const missingMarker = (key: string) => `[[MISSING_TRANSLATION:${key}]]`;
+  const safeT = (key: string) =>
+    t(key, {
+      defaultValue: missingMarker(key),
+    });
+
+  const isMissing = (value: string, key: string) => value === missingMarker(key);
+  const requiredFields = [
+    "srLabel",
+    "role",
+    "name",
+    "description",
+    "image",
+    "webp",
+    "alt",
+  ] as const;
+
+  const crewMembers: CrewMember[] = crewSlugs.map((slug) => {
+    const data = {
+      slug,
+      srLabel: safeT(`items.${slug}.srLabel`),
+      role: safeT(`items.${slug}.role`),
+      name: safeT(`items.${slug}.name`),
+      description: safeT(`items.${slug}.description`),
+      image: safeT(`items.${slug}.image`),
+      webp: safeT(`items.${slug}.webp`),
+      alt: safeT(`items.${slug}.alt`),
+    };
+
+    const missingFields = requiredFields.filter((field) =>
+      isMissing(data[field], `items.${slug}.${field}`),
+    );
+
+    if (missingFields.length > 0) {
+      throw new Error(
+        `Invalid crew i18n data for "${slug}". Missing fields: ${missingFields.join(", ")}`,
+      );
+    }
+
+    return data;
+  });
 
   const selectedSlug = resolvedSearchParams.crew;
   const hasSelectedSlug = crewMembers.some((member) => member.slug === selectedSlug);
@@ -78,7 +83,7 @@ export default async function Crew({ searchParams }: PageProps) {
   return (
     <main id="main" className="main-container main-container--crew flow">
       <h1 className="numbered-title">
-        <span aria-hidden="true">02</span> Meet your crew
+        <span aria-hidden="true">02</span> {safeT("numberedTitle")}
       </h1>
 
       <CrewDots
