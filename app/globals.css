@@ -331,13 +331,55 @@ Typography
 
 /* Primary Navigation */
 
+.logo {
+  margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
 .primary-navigation {
-  @apply list-none p-0 m-0 z-10 flex flex-row gap-x-8;
+  @apply list-none px-2 py-0 m-0 z-10 flex flex-row gap-x-8;
+  /* Set the gap between logo and nav bar */
+  --gap: clamp(1.5rem, 5vw, 3.5rem);
   /* Set the gap between nav text and its underlined indicator */
   --underline-gap: 2rem;
   background-color: hsl( var(--color-dark) / .9);
   transition: transform 500ms ease-in-out;
 }
+
+
+@media (35em <= width < 45em) {
+  .primary-navigation a > span {
+    display: none;
+  }
+}
+
+@media (min-width: 35em) {
+  .primary-navigation {
+      padding-inline: clamp(3rem, 5vw, 7rem);
+  }
+}
+
+@media (min-width: 45em) {
+
+    .primary-header::after {
+      content: '';
+      display: block;
+      position: relative;
+      height: 1px;
+      width: 100%;
+      margin-right: -2.5rem;
+      background:  hsl( var(--color-white) / .25);
+      order: 1;
+    }
+
+    .header-nav {
+        order: 2;
+    }
+
+  .primary-navigation {
+      margin-block: 2rem;
+  }
+}
+
 
 @supports (backdrop-filter: blur(1.5rem)) {
   .primary-navigation {

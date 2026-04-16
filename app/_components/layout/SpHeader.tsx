@@ -10,12 +10,12 @@ export function SpHeader() {
   ];
 
   return (
-    <header className="flex items-center gap-4 z-10">
-      <div>
+    <header className="primary-header flex justify-between items-center z-10">
+      <div className="logo-wrapper">
         <Image
           src="/shared/logo.svg"
           alt="space tourism logo"
-          className="h-auto w-auto"
+          className="h-auto w-auto logo"
           width={100}
           height={100}
         />

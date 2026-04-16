@@ -40,7 +40,7 @@ export function MobileNav({ links }: { links: NavLink[] }) {
         <span className="sr-only">Menu</span>
       </button>
 
-      <nav>
+      <nav className="header-nav">
         <ul
           id="primary-navigation"
           data-visible={isOpen}
