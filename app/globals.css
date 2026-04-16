@@ -157,7 +157,7 @@ select {
 }
 
 /* -----------------------------------------------------------------------------
-   Base & layout
+   Base 
    ----------------------------------------------------------------------------- */
 body {
   font-family: var(--ff-sans-normal);
@@ -180,6 +180,67 @@ body {
 .header-height {
   min-height: var(--header-height);
 }  
+
+
+
+/* -----------------------------------------------------------------------------
+Colors
+----------------------------------------------------------------------------- */
+
+.bg-dark { background-color: hsl( var(--color-dark) );}
+.bg-accent { background-color: hsl( var(--color-light) );}
+.bg-white { background-color: hsl( var(--color-white) );}
+
+.text-dark { color: hsl( var(--color-dark) );}
+.text-accent { color: hsl( var(--color-light) );}
+.text-white { color: hsl( var(--color-white) );}
+
+/* -----------------------------------------------------------------------------
+Typography
+----------------------------------------------------------------------------- */
+
+.ff-serif { font-family: var(--font-bellefair), serif; } 
+.ff-sans-cond { font-family: var(--font-barlow-condensed), sans-serif; } 
+.ff-sans-normal { font-family: var(--font-barlow), sans-serif; } 
+
+.letter-spacing-1 { letter-spacing: 4.75px; } 
+.letter-spacing-2 { letter-spacing: 2.7px; } 
+.letter-spacing-3 { letter-spacing: 2.35px; } 
+
+.fs-900 { font-size: var(--fs-900); }
+.fs-800 { font-size: var(--fs-800); }
+.fs-700 { font-size: var(--fs-700); }
+.fs-600 { font-size: var(--fs-600); }
+.fs-500 { font-size: var(--fs-500); }
+.fs-400 { font-size: var(--fs-400); }
+.fs-300 { font-size: var(--fs-300); }
+.fs-200 { font-size: var(--fs-200); }
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+    line-height: 1.1;
+}
+
+.numbered-title {
+    font-family: var(--ff-sans-cond);
+    font-size: var(--fs-500);
+    text-transform: uppercase;
+    letter-spacing: 4.72px; 
+}
+
+.numbered-title span {
+    margin-right: .5em;
+    font-weight: 700;
+    color: hsl( var(--color-white) / .25);
+}
+
+
+
+/* ------------------------------------------------ 
+Layout               
+------------------------------------------------ */
 
 .flex {
   display: flex;
@@ -270,29 +331,6 @@ body {
 }
 
 
-/* use em for safari compatibility */
-/* @media (min-width: 45em) {
-  .main-container {
-    column-gap: var(--container-gap, 2rem);
-    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr);
-  }
-
-  .main-container > *:first-child {
-      grid-column: 2;
-      outline: 1px solid red;
-  }
-
-  .main-container > *:last-child {
-      grid-column: 3;
-      outline: 1px solid yellow;
-  }
-
-  .main-container.main-container--bottom {
-    padding-bottom: max(6rem, 15vh);
-    align-content: end;
-  } 
-} */
-
 
 @media (min-width: 45em) {
   .main-container {
@@ -305,32 +343,12 @@ body {
       padding-bottom: max(6rem, 20vh);
       align-items: end;
   }
-  
-  .main-container--home > *:first-child {
-      grid-column: 2;
-  }
-
-  .main-container--home > *:last-child {
-      grid-column: 3;
-  }
-  
-  .main-container--destination {
-      justify-items: start;
-      align-content: start;
-      grid-template-areas: 
-          '. title title .'
-          '. image tabs .'
-          '. image content .';
-  }
-  
-  .main-container--destination > picture {
-      max-width: 90%;
-  }
-   
+    
   .destination-meta {
       --gap: min(6vw, 6rem);
       justify-content: start;
   }
+
 }
 
 
@@ -339,6 +357,18 @@ body {
 /* ----------------------------- */
 
 /* home */
+
+@media (min-width: 45em) {
+  
+  .main-container--home > *:first-child {
+      grid-column: 2;
+  }
+
+  .main-container--home > *:last-child {
+      grid-column: 3;
+  }
+}
+
 .page-home {
   background-image: url(/home/background-home-mobile.jpg);
   background-repeat: no-repeat;
@@ -358,76 +388,118 @@ body {
 }
 
 
-/* destination */
-.destination {
+/* destination page layout */
+
+@media (min-width: 45em) {
+  .main-container--destination {
+      justify-items: start;
+      align-content: start;
+      grid-template-areas: 
+          '. title title .'
+          '. image tabs .'
+          '. image content .';
+  }
+
+  .main-container--destination > picture {
+      max-width: 90%;
+  }
+ 
+}
+
+.page-destination {
   background-image: url(/destination/background-destination-mobile.jpg);
 }
 
 @media (min-width: 35rem) {
-  .destination {
+  .page-destination {
       background-position: center center;
       background-image: url(/destination/background-destination-tablet.jpg);
   }
 }
 
 @media (min-width: 45rem) {
-  .destination {
+  .page-destination {
       background-image: url(/destination/background-destination-desktop.jpg);
   }
 } 
 
-/* -----------------------------------------------------------------------------
-Colors
------------------------------------------------------------------------------ */
-
-.bg-dark { background-color: hsl( var(--color-dark) );}
-.bg-accent { background-color: hsl( var(--color-light) );}
-.bg-white { background-color: hsl( var(--color-white) );}
-
-.text-dark { color: hsl( var(--color-dark) );}
-.text-accent { color: hsl( var(--color-light) );}
-.text-white { color: hsl( var(--color-white) );}
-
-/* -----------------------------------------------------------------------------
-Typography
------------------------------------------------------------------------------ */
-
-.ff-serif { font-family: var(--font-bellefair), serif; } 
-.ff-sans-cond { font-family: var(--font-barlow-condensed), sans-serif; } 
-.ff-sans-normal { font-family: var(--font-barlow), sans-serif; } 
-
-.letter-spacing-1 { letter-spacing: 4.75px; } 
-.letter-spacing-2 { letter-spacing: 2.7px; } 
-.letter-spacing-3 { letter-spacing: 2.35px; } 
-
-.fs-900 { font-size: var(--fs-900); }
-.fs-800 { font-size: var(--fs-800); }
-.fs-700 { font-size: var(--fs-700); }
-.fs-600 { font-size: var(--fs-600); }
-.fs-500 { font-size: var(--fs-500); }
-.fs-400 { font-size: var(--fs-400); }
-.fs-300 { font-size: var(--fs-300); }
-.fs-200 { font-size: var(--fs-200); }
-
-.fs-900,
-.fs-800,
-.fs-700,
-.fs-600 {
-    line-height: 1.1;
+/* crew page background */
+.page-crew {
+  background-image: url(/crew/background-crew-mobile.jpg);
 }
 
-.numbered-title {
-    font-family: var(--ff-sans-cond);
-    font-size: var(--fs-500);
-    text-transform: uppercase;
-    letter-spacing: 4.72px; 
+@media (min-width: 35rem) {
+  .page-crew {
+    background-position: center center;
+    background-image: url(/crew/background-crew-tablet.jpg);
+  }
 }
 
-.numbered-title span {
-    margin-right: .5em;
-    font-weight: 700;
-    color: hsl( var(--color-white) / .25);
+@media (min-width: 45rem) {
+  .page-crew {
+    background-image: url(/crew/background-crew-desktop.jpg);
+  }
 }
+
+/* crew page layout */
+
+.main-container--crew {
+  --flow-space: 2rem;
+  grid-template-areas: 
+      'title'
+      'image'
+      'tabs'
+      'content';
+}
+
+.main-container--crew > picture {
+  grid-area: image;
+  max-width: 60%;
+  border-bottom: 1px solid hsl( var(--color-white) / .1);
+}
+
+.main-container--crew > .dot-indicators {
+  grid-area: tabs;
+}
+
+.main-container--crew > .crew-details {
+  grid-area: content;
+}
+
+.crew-details h2 {
+  color: hsl( var(--color-white) / .5);
+}
+
+@media (min-width: 35em) {
+
+  .main-container--crew {
+    padding-bottom: 0;
+    grid-template-areas: 
+        'title'
+        'content'
+        'tabs'
+        'image';
+  }
+
+}
+
+@media (min-width: 45em) {
+  .main-container--crew {
+    grid-template-columns: minmax(1rem, 1fr) minmax(0, 37rem) minmax(0, 23rem) minmax(1rem, 1fr);
+    justify-items: start;
+    grid-template-areas: 
+        '. title title .'
+        '. content image .'
+        '. tabs image .';
+  }
+
+  .main-container--crew > picture {
+      grid-column: span 2;
+      align-self: end; 
+      max-width: 90%;
+  }
+}
+
 
 /* -----------------------------------------------------------------------------
    Components – consistent patterns (use these classes in the app)
@@ -579,6 +651,24 @@ Typography
 .underline-indicators > [aria-selected="true"] {
   color: hsl( var(--color-white) / 1);
   border-color: hsl( var(--color-white) / 1); 
+}
+
+/* Dot indicators : used for crew selector */
+.dot-indicators > * {
+  cursor: pointer;
+  border: 0;
+  border-radius: 50%;
+  padding: .5em;
+  background-color: hsl( var(--color-white) / .25);
+}
+
+.dot-indicators > *:hover,
+.dot-indicators > *:focus {
+  background-color: hsl( var(--color-white) / .5);
+}
+
+.dot-indicators > [aria-selected="true"] {
+  background-color: hsl( var(--color-white) / 1);
 }
 
 
