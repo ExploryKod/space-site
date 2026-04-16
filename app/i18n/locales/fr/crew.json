@@ -1,0 +1,42 @@
+{
+  "metaTitle": "Équipage",
+  "numberedTitle": "Rencontrez votre équipage",
+  "items": {
+    "commander": {
+      "srLabel": "Le commandant",
+      "role": "Commandant",
+      "name": "Douglas Hurley",
+      "description": "Douglas Gerald Hurley est un ingénieur américain, ancien pilote du Corps des Marines et ancien astronaute de la NASA. Il s'est envolé dans l'espace pour la troisième fois en tant que commandant de Crew Dragon Demo-2.",
+      "image": "/crew/image-douglas-hurley.png",
+      "webp": "/crew/image-douglas-hurley.webp",
+      "alt": "Douglas Hurley"
+    },
+    "mission-specialist": {
+      "srLabel": "Le spécialiste de mission",
+      "role": "Spécialiste de mission",
+      "name": "Mark Shuttleworth",
+      "description": "Mark Richard Shuttleworth est le fondateur et PDG de Canonical, l'entreprise à l'origine du système d'exploitation Ubuntu basé sur Linux. Shuttleworth est devenu le premier Sud-Africain à voyager dans l'espace en tant que touriste spatial.",
+      "image": "/crew/image-mark-shuttleworth.png",
+      "webp": "/crew/image-mark-shuttleworth.webp",
+      "alt": "Mark Shuttleworth"
+    },
+    "pilot": {
+      "srLabel": "Le pilote",
+      "role": "Pilote",
+      "name": "Victor Glover",
+      "description": "Pilote lors du premier vol opérationnel du Crew Dragon de SpaceX vers la Station spatiale internationale. Glover est commandant dans la marine américaine où il pilote un F/A-18. Il a été membre de l'Expédition 64 et ingénieur de vol pour les systèmes de la station.",
+      "image": "/crew/image-victor-glover.png",
+      "webp": "/crew/image-victor-glover.webp",
+      "alt": "Victor Glover"
+    },
+    "engineer": {
+      "srLabel": "L'ingénieure de vol",
+      "role": "Ingénieure de vol",
+      "name": "Anousheh Ansari",
+      "description": "Anousheh Ansari est une ingénieure irano-américaine et cofondatrice de Prodea Systems. Ansari a été la quatrième touriste spatiale autofinancée, la première femme autofinancée à se rendre à l'ISS, et la première Iranienne dans l'espace.",
+      "image": "/crew/image-anousheh-ansari.png",
+      "webp": "/crew/image-anousheh-ansari.webp",
+      "alt": "Anousheh Ansari"
+    }
+  }
+}
