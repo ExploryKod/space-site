@@ -20,7 +20,7 @@ export default async function Home({ params }: PageProps) {
   const { t } = await getT("home", { lng });
 
   return (
-    <main id="main" className="main-container main-container--bottom">
+    <main id="main" className="main-container main-container--bottom main-container--home">
       <div className="flex flex-col items-center">
         <h1 className="text-accent fs-500 ff-sans-cond uppercase letter-spacing-1 text-center md:text-left">
           {t("preTitle")}
@@ -28,11 +28,12 @@ export default async function Home({ params }: PageProps) {
             {t("heroTitle")}
           </span>
         </h1>
-
-        <p className="text-center max-w-[50ch]">{`${t("heroLead")} ${t("heroHint")}`}</p>
+         <div className="w-full flex flex-col items-center md:items-start">
+           <p className="text-center md:text-left max-w-[50ch]">{`${t("heroLead")} ${t("heroHint")}`}</p>
+        </div>
       </div>
       <div>
-        <a href="#" className="space-button uppercase ff-serif fs-600 text-dark bg-white">
+        <a href="/destination" className="space-button uppercase ff-serif fs-600 text-dark bg-white">
           {t("explore")}
         </a>
       </div>

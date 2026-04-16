@@ -4,6 +4,7 @@ import DestinationTabs from "@/app/_components/molecules/DestinationTabs";
 
 type PageProps = {
   params: Promise<{ lng: string }>;
+  searchParams: Promise<{ destination?: string }>;
 };
 
 export async function generateMetadata({
@@ -16,8 +17,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function Destination({ params }: PageProps) {
+export default async function Destination({ params, searchParams }: PageProps) {
   const { lng } = await params;
+  const resolvedSearchParams = await searchParams;
   const { t } = await getT("destination", { lng });
 
   const destinationSlugs: readonly string[] = ["moon", "mars", "europa", "titan"];
@@ -67,8 +69,22 @@ export default async function Destination({ params }: PageProps) {
     return data;
   });
 
-  const destinationTabsData = destinations.map(({ slug, name }) => ({ slug, name }));
-  const activeDestination = destinations[0]?.slug ?? "";
+  const selectedSlug = resolvedSearchParams.destination;
+  const hasSelectedSlug = destinations.some((destination) => destination.slug === selectedSlug);
+  const activeDestination = hasSelectedSlug
+    ? (selectedSlug as string)
+    : (destinations[0]?.slug ?? "");
+  const labels = {
+    avgDistance: safeT("labels.avgDistance"),
+    estTravelTime: safeT("labels.estTravelTime"),
+  };
+  const activeDestinationData = destinations.find(
+    (destination) => destination.slug === activeDestination,
+  );
+
+  if (!activeDestinationData) {
+    throw new Error("No valid destination available for rendering.");
+  }
 
   return (
     <main id="main" className="main-container main-container--destination flow">
@@ -76,68 +92,48 @@ export default async function Destination({ params }: PageProps) {
         <span aria-hidden="true">01</span> {safeT("numberedTitle")}
       </h1>
 
-
-      {destinations.map((destination) => {
-        const isActive = destination.slug === activeDestination;
-        const pictureId = `${destination.slug}-image`;
-
-        return (
-          <picture key={destination.slug} id={pictureId} hidden={!isActive}>
-            <source srcSet={destination.webp} type="image/webp" />
-            <img
-              src={destination.image}
-              alt={destination.alt}
-            />
-          </picture>
-        );
-      })}
-
-   
       <DestinationTabs
-        destinations={destinationTabsData}
-        activeDestination={activeDestination}
+        destinations={destinations.map(({ slug, name }) => ({ slug, name }))}
+        initialActiveDestination={activeDestination}
       />
 
-      {destinations.map((destination) => {
-        const isActive = destination.slug === activeDestination;
-        const tabId = `${destination.slug}-tab`;
+      <picture id={`${activeDestinationData.slug}-image`}>
+        <source srcSet={activeDestinationData.webp} type="image/webp" />
+        <img src={activeDestinationData.image} alt={activeDestinationData.alt} />
+      </picture>
 
-        return (
-          <article
-            key={destination.slug}
-            hidden={!isActive}
-            className="destination-info flow"
-            id={tabId}
-            tabIndex={isActive ? 0 : -1}
-            role="tabpanel"
-          >
-            <h2 className="fs-800 uppercase ff-serif">
-                {destination.name}
-            </h2>
+      <article
+        className="destination-info flow"
+        id={`${activeDestinationData.slug}-tab`}
+        tabIndex={0}
+        role="tabpanel"
+        aria-labelledby={`${activeDestinationData.slug}-trigger`}
+      >
+        <h2 className="fs-800 uppercase ff-serif">
+          {activeDestinationData.name}
+        </h2>
 
-            <p>{destination.description}</p>
+        <p>{activeDestinationData.description}</p>
 
-            <div className="destination-meta flex">
-              <div>
-                <h3 className="text-accent fs-200 uppercase">
-                  {safeT("labels.avgDistance")}
-                </h3>
-                <p className="ff-serif uppercase">
-                  {destination.distance}
-                </p>
-              </div>
-              <div>
-                <h3 className="text-accent fs-200 uppercase">
-                  {safeT("labels.estTravelTime")}
-                </h3>
-                <p className="ff-serif uppercase">
-                  {destination.travel}
-                </p>
-              </div>
-            </div>
-          </article>
-        );
-      })}
+        <div className="destination-meta flex">
+          <div>
+            <h3 className="text-accent fs-200 uppercase">
+              {labels.avgDistance}
+            </h3>
+            <p className="ff-serif uppercase">
+              {activeDestinationData.distance}
+            </p>
+          </div>
+          <div>
+            <h3 className="text-accent fs-200 uppercase">
+              {labels.estTravelTime}
+            </h3>
+            <p className="ff-serif uppercase">
+              {activeDestinationData.travel}
+            </p>
+          </div>
+        </div>
+      </article>
   </main>
   );
 }
