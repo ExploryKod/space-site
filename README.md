@@ -1,3 +1,5 @@
+https://space-cruising.netlify.app/
+
 ## Auth-first Next.js Template
 
 Reusable Next.js App Router starter with authentication flows (register/login) already wired.
