@@ -1,28 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import type { Resource } from "i18next";
 import { Barlow, Barlow_Condensed, Bellefair } from "next/font/google";
-import { headers } from "next/headers";
-import { I18nProvider } from "next-i18next/client";
-import { getT, initServerI18next } from "next-i18next/server";
+import { initServerI18next } from "next-i18next/server";
 import i18nConfig from "@/i18n.config";
-import enCommon from "@/app/i18n/locales/en/common.json";
-import enConnexion from "@/app/i18n/locales/en/connexion.json";
-import frCommon from "@/app/i18n/locales/fr/common.json";
-import frConnexion from "@/app/i18n/locales/fr/connexion.json";
 import "@/app/globals.css";
-import { ThemeProvider } from "@modules/app/react/ThemeProvider";
-import { SpHeader } from "@/app/_components/layout/SpHeader";
-import { Footer } from "@modules/app/react/layout/Footer";
+import { BodyPageClass } from "@/app/_components/layout/BodyPageClass";
 
 initServerI18next(i18nConfig);
-
-/** Bundled for client `I18nProvider` so every namespace (e.g. `connexion`) hydrates reliably. */
-const clientI18nResources = {
-  en: { common: enCommon, connexion: enConnexion },
-  fr: { common: frCommon, connexion: frConnexion },
-} satisfies Resource;
-
-const LANG_HEADER = "x-i18next-current-language";
 
 const siteName = "Clean App — Next.js template";
 const siteDescription =
@@ -90,20 +73,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-  const headerList = await headers();
-  const pathname = headerList.get("x-current-path");
-
-  const segments = (pathname ?? "/").split("/").filter(Boolean);
-  if (segments[0] && i18nConfig.supportedLngs.includes(segments[0])) {
-    segments.shift(); // remove locale prefix
-  }
-  const lastPart = segments.at(-1) ?? "home";
-  const page = `page-${lastPart}`;
-
-  const lang =
-    (await headers()).get(LANG_HEADER) ?? i18nConfig.fallbackLng ?? "en";
-  await getT(["common", "connexion"], { lng: lang });
+  const lang = i18nConfig.fallbackLng ?? "en";
 
   return (
     <html
@@ -112,26 +82,12 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable} ${page}`}
+        className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable} page-home`}
         suppressHydrationWarning
       >
+        <BodyPageClass supportedLngs={i18nConfig.supportedLngs} />
         <a href="#main" className="skip-to-main">Skip to content</a>
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="light"
-          enableSystem={false}
-        >
-          <I18nProvider
-            language={lang}
-            resources={clientI18nResources}
-            supportedLngs={i18nConfig.supportedLngs}
-            fallbackLng={i18nConfig.fallbackLng}
-          >
-            <SpHeader />
-            {children}
-            <Footer />
-          </I18nProvider>
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
