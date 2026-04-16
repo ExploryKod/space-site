@@ -43,7 +43,7 @@
   }
 }
 
-@media (min-width: var(--width-md)) {
+@media (min-width: 48em) {
   :root {
       /* font-sizes */
       --fs-800: 6.25rem;
