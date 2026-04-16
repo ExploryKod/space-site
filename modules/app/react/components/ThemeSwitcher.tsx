@@ -1,19 +1,12 @@
 "use client";
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export const ThemeSwitcher: React.FC = () => {
-  const { theme, setTheme } = useTheme();
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const src = theme === 'light' ? '/dark.svg' : '/light.svg';
-  const label = theme === 'dark' ? 'Light' : 'Dark';
+  const { resolvedTheme, setTheme } = useTheme();
+  const currentTheme = resolvedTheme ?? 'dark';
+  const src = currentTheme === 'light' ? '/dark.svg' : '/light.svg';
+  const label = currentTheme === 'dark' ? 'Light' : 'Dark';
 
   const placeholderIcon = (
     <svg
@@ -33,25 +26,21 @@ export const ThemeSwitcher: React.FC = () => {
 
   return (
     <button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(currentTheme === 'dark' ? 'light' : 'dark')}
       className="flex items-center gap-2 h-8 min-h-8 min-w-[7.5rem] py-1"
       suppressHydrationWarning
     >
       <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded flex items-center justify-center">
-        {mounted ? (
-          <Image
-            src={src}
-            width={24}
-            height={24}
-            alt=""
-            aria-hidden
-            className="h-6 w-6 object-contain"
-          />
-        ) : (
-          placeholderIcon
-        )}
+        <Image
+          src={src}
+          width={24}
+          height={24}
+          alt=""
+          aria-hidden
+          className="h-6 w-6 object-contain"
+        />
       </span>
-      <span className="text-sm font-medium leading-none">{mounted ? `${label} mode` : 'Dark mode'}</span>
+      <span className="text-sm font-medium leading-none">{`${label} mode`}</span>
     </button>
   );
 };
