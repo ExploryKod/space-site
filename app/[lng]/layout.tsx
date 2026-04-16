@@ -49,7 +49,7 @@ export default async function LngLayout({ children, params }: LngLayoutProps) {
       >
         <SpHeader />
         {children}
-        <Footer />
+        
       </I18nProvider>
     </ThemeProvider>
   );
