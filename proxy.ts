@@ -5,9 +5,7 @@ import type { NextRequest } from "next/server";
 const i18nProxy = createProxy(i18nConfig);
 
 export function proxy(request: NextRequest) {
-  const response = i18nProxy(request);
-  response.headers.set("x-current-path", request.nextUrl.pathname);
-  return response;
+  return i18nProxy(request);
 }
 
 export const config = {
