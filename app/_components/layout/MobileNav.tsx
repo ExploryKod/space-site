@@ -14,11 +14,6 @@ export function MobileNav({ links }: { links: NavLink[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  /* Close menu when route changes */
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
   /* Lock page scroll when menu is open */
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -53,6 +48,7 @@ export function MobileNav({ links }: { links: NavLink[] }) {
                 <Link
                   href={link.href}
                   className="font-bold [font-family:var(--ff-sans-cond)] uppercase tracking-[2.7px] text-white no-underline"
+                  onClick={() => setIsOpen(false)}
                 >
                   <span className="mr-2 font-bold" aria-hidden="true">{link.number}</span>
                   {link.label}
