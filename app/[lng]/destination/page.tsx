@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getT } from "next-i18next/server";
+import DestinationTabs from "@/app/_components/molecules/DestinationTabs";
 
 type PageProps = {
   params: Promise<{ lng: string }>;
@@ -19,9 +20,7 @@ export default async function Destination({ params }: PageProps) {
   const { lng } = await params;
   const { t } = await getT("destination", { lng });
 
-  const destinations = ["moon", "mars", "europa", "titan"] as const;
-  type DestinationKey = (typeof destinations)[number];
-  const activeDestination: DestinationKey = "moon";
+  const destinationSlugs: readonly string[] = ["moon", "mars", "europa", "titan"];
 
   const missingMarker = (key: string) => `[[MISSING_TRANSLATION:${key}]]`;
   const safeT = (key: string) =>
@@ -30,71 +29,82 @@ export default async function Destination({ params }: PageProps) {
     });
 
   const isMissing = (value: string, key: string) => value === missingMarker(key);
+  const requiredFields = ["name", "description", "distance", "travel", "image", "webp", "alt"] as const;
+
+  type DestinationData = {
+    slug: string;
+    name: string;
+    description: string;
+    distance: string;
+    travel: string;
+    image: string;
+    webp: string;
+    alt: string;
+  };
+
+  const destinations: DestinationData[] = destinationSlugs.map((slug) => {
+    const data = {
+      slug,
+      name: safeT(`items.${slug}.name`),
+      description: safeT(`items.${slug}.description`),
+      distance: safeT(`items.${slug}.distance`),
+      travel: safeT(`items.${slug}.travel`),
+      image: safeT(`items.${slug}.image`),
+      webp: safeT(`items.${slug}.webp`),
+      alt: safeT(`items.${slug}.alt`),
+    };
+
+    const missingFields = requiredFields.filter((field) =>
+      isMissing(data[field], `items.${slug}.${field}`),
+    );
+
+    if (missingFields.length > 0) {
+      throw new Error(
+        `Invalid destination i18n data for "${slug}". Missing fields: ${missingFields.join(", ")}`,
+      );
+    }
+
+    return data;
+  });
+
+  const destinationTabsData = destinations.map(({ slug, name }) => ({ slug, name }));
+  const activeDestination = destinations[0]?.slug ?? "";
 
   return (
-    <main id="main" className="grid-container grid-container--destination flow">
+    <main id="main" className="main-container main-container--destination flow">
       <h1 className="numbered-title">
         <span aria-hidden="true">01</span> {safeT("numberedTitle")}
       </h1>
 
 
-      {destinations.map((slug) => {
-        const isActive = slug === activeDestination;
-        const pictureId = `${slug}-image`;
-        const imageKey = `items.${slug}.image`;
-        const altKey = `items.${slug}.alt`;
-        const imageVal = safeT(imageKey);
-        const altVal = safeT(altKey);
-
-        // For images, assets are not localized; if the i18n image key is missing,
-        // fall back to the deterministic local asset path but keep alt visible as the error signal.
-        const imgSrc = isMissing(imageVal, imageKey)
-          ? `/destination/image-${slug}.png`
-          : imageVal;
+      {destinations.map((destination) => {
+        const isActive = destination.slug === activeDestination;
+        const pictureId = `${destination.slug}-image`;
 
         return (
-          <picture key={slug} id={pictureId} hidden={!isActive}>
+          <picture key={destination.slug} id={pictureId} hidden={!isActive}>
+            <source srcSet={destination.webp} type="image/webp" />
             <img
-              src={imgSrc}
-              alt={altVal}
+              src={destination.image}
+              alt={destination.alt}
             />
           </picture>
         );
       })}
 
-      <div
-        className="tab-list underline-indicators flex"
-        role="tablist"
-        aria-label="destination list"
-      >
-        {destinations.map((slug) => {
-          const isActive = slug === activeDestination;
-          const pictureId = `${slug}-image`;
-          const tabId = `${slug}-tab`;
+   
+      <DestinationTabs
+        destinations={destinationTabsData}
+        activeDestination={activeDestination}
+      />
 
-          return (
-            <button
-              key={slug}
-              aria-selected={isActive}
-              role="tab"
-              aria-controls={tabId}
-              className="uppercase ff-sans-cond text-accent letter-spacing-2"
-              tabIndex={isActive ? 0 : -1}
-              data-image={pictureId}
-            >
-              {safeT(`items.${slug}.name`)}
-            </button>
-          );
-        })}
-      </div>
-
-      {destinations.map((slug) => {
-        const isActive = slug === activeDestination;
-        const tabId = `${slug}-tab`;
+      {destinations.map((destination) => {
+        const isActive = destination.slug === activeDestination;
+        const tabId = `${destination.slug}-tab`;
 
         return (
           <article
-            key={slug}
+            key={destination.slug}
             hidden={!isActive}
             className="destination-info flow"
             id={tabId}
@@ -102,10 +112,10 @@ export default async function Destination({ params }: PageProps) {
             role="tabpanel"
           >
             <h2 className="fs-800 uppercase ff-serif">
-                {safeT(`items.${slug}.name`)}
+                {destination.name}
             </h2>
 
-            <p>{safeT(`items.${slug}.description`)}</p>
+            <p>{destination.description}</p>
 
             <div className="destination-meta flex">
               <div>
@@ -113,7 +123,7 @@ export default async function Destination({ params }: PageProps) {
                   {safeT("labels.avgDistance")}
                 </h3>
                 <p className="ff-serif uppercase">
-                  {safeT(`items.${slug}.distance`)}
+                  {destination.distance}
                 </p>
               </div>
               <div>
@@ -121,7 +131,7 @@ export default async function Destination({ params }: PageProps) {
                   {safeT("labels.estTravelTime")}
                 </h3>
                 <p className="ff-serif uppercase">
-                  {safeT(`items.${slug}.travel`)}
+                  {destination.travel}
                 </p>
               </div>
             </div>

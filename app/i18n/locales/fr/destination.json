@@ -12,6 +12,7 @@
       "distance": "384,400 km",
       "travel": "3 days",
       "image": "/destination/image-moon.png",
+      "webp": "/destination/image-moon.webp",
       "alt": "la lune"
     },
     "mars": {
@@ -20,6 +21,7 @@
       "distance": "225 mil. km",
       "travel": "9 months",
       "image": "/destination/image-mars.png",
+      "webp": "/destination/image-mars.webp",
       "alt": "mars"
     },
     "europa": {
@@ -28,6 +30,7 @@
       "distance": "628 mil. km",
       "travel": "3 years",
       "image": "/destination/image-europa.png",
+      "webp": "/destination/image-europa.webp",
       "alt": "europa"
     },
     "titan": {
@@ -36,6 +39,7 @@
       "distance": "1.6 bil. km",
       "travel": "7 years",
       "image": "/destination/image-titan.png",
+      "webp": "/destination/image-titan.webp",
       "alt": "titan"
     }
   }
