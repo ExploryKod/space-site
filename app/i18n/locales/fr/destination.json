@@ -8,34 +8,38 @@
   "items": {
     "moon": {
       "name": "Lune",
-      "description": "See our planet as you’ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you’re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites.",
-      "distance": "384,400 km",
-      "travel": "3 days",
+      "description": "Découvrez notre planète comme vous ne l'avez jamais vue auparavant. Un voyage parfait et relaxant pour prendre du recul et revenir ressourcé. Une fois sur place, profitez-en pour découvrir l'histoire en visitant les sites d'atterrissage de Luna 2 et d'Apollo 11.",
+      "distance": "384 400 km",
+      "travel": "3 jours",
       "image": "/destination/image-moon.png",
+      "webp": "/destination/image-moon.webp",
       "alt": "la lune"
     },
     "mars": {
       "name": "Mars",
-      "description": "Don’t forget to pack your hiking boots. You’ll need them to tackle Olympus Mons, the tallest planetary mountain in our solar system. It’s two and a half times the size of Everest!",
-      "distance": "225 mil. km",
-      "travel": "9 months",
+      "description": "N'oubliez pas d'emporter vos chaussures de randonnée. Vous en aurez besoin pour gravir Olympus Mons, la plus haute montagne planétaire de notre système solaire. Elle mesure deux fois et demie la taille de l'Everest !",
+      "distance": "225 millions de km",
+      "travel": "9 mois",
       "image": "/destination/image-mars.png",
+      "webp": "/destination/image-mars.webp",
       "alt": "mars"
     },
     "europa": {
       "name": "Europa",
-      "description": "The smallest of the four Galilean moons orbiting Jupiter, Europa is a winter lover’s dream. With an icy surface, it’s perfect for a bit of ice skating, curling, hockey, or simple relaxation in your snug wintery cabin.",
-      "distance": "628 mil. km",
-      "travel": "3 years",
+      "description": "La plus petite des quatre lunes galiléennes en orbite autour de Jupiter, Europe est le rêve des amateurs d'hiver. Avec sa surface glacée, c'est l'endroit idéal pour faire du patin à glace, du curling, du hockey, ou simplement se détendre dans votre confortable cabine hivernale.",
+      "distance": "628 millions de km",
+      "travel": "3 ans",
       "image": "/destination/image-europa.png",
+      "webp": "/destination/image-europa.webp",
       "alt": "europa"
     },
     "titan": {
       "name": "Titan",
-      "description": "The only moon known to have a dense atmosphere other than Earth, Titan is a home away from home (just a few hundred degrees colder!). As a bonus, you get striking views of the Rings of Saturn.",
-      "distance": "1.6 bil. km",
-      "travel": "7 years",
+      "description": "Seule lune connue à posséder une atmosphère dense en dehors de la Terre, Titan est un vrai chez-soi loin de chez soi (avec juste quelques centaines de degrés en moins !). En bonus, vous profiterez d'une vue spectaculaire sur les anneaux de Saturne.",
+      "distance": "1,6 milliard de km",
+      "travel": "7 ans",
       "image": "/destination/image-titan.png",
+      "webp": "/destination/image-titan.webp",
       "alt": "titan"
     }
   }

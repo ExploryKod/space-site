@@ -202,15 +202,76 @@ body {
 }
 
 .main-container {
-  display: grid;
   text-align: center;
+  display: grid;
   place-items: center;
-  padding-inline: 2rem;
+  padding-inline: 1rem;
+  padding-bottom: 4rem;
+}
+
+
+.main-container p:not([class]) {
+  max-width: 50ch;
+}
+
+.numbered-title {
+  grid-area: title;
+}
+
+@media (min-width: 35em) {
+  .numbered-title {
+    justify-self: start;
+    margin-top: 2rem;
+  }
+}
+
+/* destination layout */
+
+.main-container--destination {
+  --flow-space: 2rem;
+  grid-template-areas: 
+      'title'
+      'image'
+      'tabs'
+      'content';
+}
+
+.main-container--destination > picture {
+  grid-area: image;
+  max-width: 60%;
+  align-self: start;
+}
+
+.main-container--destination > .tab-list {
+  grid-area: tabs;
+}
+
+.main-container--destination > .destination-info {
+  grid-area: content;
+}
+
+.destination-meta {
+  flex-direction: column;
+  border-top: 1px solid hsl( var(--color-white) / .1);
+  padding-top: 2.5rem;
+  margin-top: 2.5rem;
+}
+
+.destination-meta p {
+  font-size: 1.75rem;
+}
+
+@media (min-width: 35em) {
+ 
+  .destination-meta {
+      flex-direction: row;
+      justify-content: space-evenly;
+  }
 }
 
 
 /* use em for safari compatibility */
-@media (min-width: 45em) {
+/* @media (min-width: 45em) {
   .main-container {
     column-gap: var(--container-gap, 2rem);
     grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr);
@@ -230,6 +291,46 @@ body {
     padding-bottom: max(6rem, 15vh);
     align-content: end;
   } 
+} */
+
+
+@media (min-width: 45em) {
+  .main-container {
+      text-align: left;
+      column-gap: var(--container-gap, 2rem);
+      grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr);
+  }
+ 
+  .main-container--bottom {
+      padding-bottom: max(6rem, 20vh);
+      align-items: end;
+  }
+  
+  .main-container--home > *:first-child {
+      grid-column: 2;
+  }
+
+  .main-container--home > *:last-child {
+      grid-column: 3;
+  }
+  
+  .main-container--destination {
+      justify-items: start;
+      align-content: start;
+      grid-template-areas: 
+          '. title title .'
+          '. image tabs .'
+          '. image content .';
+  }
+  
+  .main-container--destination > picture {
+      max-width: 90%;
+  }
+   
+  .destination-meta {
+      --gap: min(6vw, 6rem);
+      justify-content: start;
+  }
 }
 
 
@@ -482,21 +583,4 @@ Typography
 
 
 
-/** Image Container */
-
-.image-contain img {
-  object-fit: contain;   
-  aspect-ratio: 1;
-}
-
-.image-container.image-cover img {
-  object-fit: cover;   
-  aspect-ratio: 1;
-}
-
-
-.image-container.image-fill img {
-  object-fit: fill;   
-  aspect-ratio: 1;
-}
 
