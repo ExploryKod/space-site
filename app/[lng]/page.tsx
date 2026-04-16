@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getT } from "next-i18next/server";
 
 type PageProps = {
@@ -33,9 +34,9 @@ export default async function Home({ params }: PageProps) {
         </div>
       </div>
       <div>
-        <a href="/destination" className="space-button uppercase ff-serif fs-600 text-dark bg-white">
+        <Link href={`/${lng}/destination`} className="space-button uppercase ff-serif fs-600 text-dark bg-white">
           {t("explore")}
-        </a>
+        </Link>
       </div>
     </main>
   );
