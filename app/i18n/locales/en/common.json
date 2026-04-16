@@ -2,14 +2,6 @@
   "title": "Space Tourism — Multi-page website",
   "description": "Plan your journey beyond Earth with destinations, crew details, and space technology highlights.",
   "tagline": "Ship features faster with a clear structure.",
-  "home": {
-    "metaTitle": "Home",
-    "preTitle": "So, you want to travel to",
-    "heroTitle": "Space",
-    "heroLead": "Let's face it; if you want to go to space, you might as well genuinely go to outer space and not hover kind of on the edge of it.",
-    "heroHint": "Well sit back, and relax because we'll give you a truly out of this world experience!",
-    "explore": "Explore"
-  },
   "header": {
     "brand": "CleanApp",
     "home": "Home",

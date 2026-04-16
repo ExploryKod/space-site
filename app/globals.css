@@ -141,6 +141,21 @@ select {
   border: 0;
 }
 
+.skip-to-main {
+  position: absolute;
+  z-index: 9999;
+  background: hsl( var(--color-white) );
+  color: hsl( var(--color-dark) );
+  padding: .5em 1em;
+  margin-inline: auto;
+  transform: translateY(-100%);
+  transition: transform 250ms ease-in;
+}
+
+.skip-to-main:focus {
+  transform: translateY(0);
+}
+
 /* -----------------------------------------------------------------------------
    Base & layout
    ----------------------------------------------------------------------------- */
@@ -240,6 +255,25 @@ body {
       background-image: url(/home/background-home-desktop.jpg);
   }
 }
+
+
+/* destination */
+.destination {
+  background-image: url(/destination/background-destination-mobile.jpg);
+}
+
+@media (min-width: 35rem) {
+  .destination {
+      background-position: center center;
+      background-image: url(/destination/background-destination-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .destination {
+      background-image: url(/destination/background-destination-desktop.jpg);
+  }
+} 
 
 /* -----------------------------------------------------------------------------
 Colors

@@ -2,14 +2,6 @@
   "title": "Tourisme spatial — Site multipage",
   "description": "Planifiez votre voyage au-delà de la Terre avec des destinations, des équipages et des technologies spatiales.",
   "tagline": "Livrez plus vite avec une structure claire.",
-  "home": {
-    "metaTitle": "Accueil",
-    "preTitle": "Alors, vous voulez voyager vers",
-    "heroTitle": "L`Espace",
-    "heroLead": "Soyons honnêtes : si vous voulez aller dans l'espace, autant vraiment aller dans l'espace, et pas juste en frôler la frontière.",
-    "heroHint": "Installez-vous et détendez-vous, car nous allons vous offrir une expérience vraiment hors du commun !",
-    "explore": "Explorer"
-  },
   "header": {
     "brand": "CleanApp",
     "home": "Accueil",

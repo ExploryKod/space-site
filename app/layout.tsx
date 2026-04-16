@@ -115,6 +115,7 @@ export default async function RootLayout({
         className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable} ${page}`}
         suppressHydrationWarning
       >
+        <a href="#main" className="skip-to-main">Skip to content</a>
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="light"

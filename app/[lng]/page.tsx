@@ -9,31 +9,31 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { lng } = await params;
-  const { t } = await getT("common", { lng });
+  const { t } = await getT("home", { lng });
   return {
-    title: t("home.metaTitle"),
+    title: t("metaTitle"),
   };
 }
 
 export default async function Home({ params }: PageProps) {
   const { lng } = await params;
-  const { t } = await getT("common", { lng });
+  const { t } = await getT("home", { lng });
 
   return (
-    <main className="main-container main-container--bottom">
+    <main id="main" className="main-container main-container--bottom">
       <div className="flex flex-col items-center">
         <h1 className="text-accent fs-500 ff-sans-cond uppercase letter-spacing-1 text-center md:text-left">
-          {t("home.preTitle")}
+          {t("preTitle")}
           <span className="block fs-900 ff-serif text-white text-center md:text-left">
-            {t("home.heroTitle")}
+            {t("heroTitle")}
           </span>
         </h1>
 
-        <p className="text-center max-w-[50ch]">{`${t("home.heroLead")} ${t("home.heroHint")}`}</p>
+        <p className="text-center max-w-[50ch]">{`${t("heroLead")} ${t("heroHint")}`}</p>
       </div>
       <div>
         <a href="#" className="space-button uppercase ff-serif fs-600 text-dark bg-white">
-          {t("home.explore")}
+          {t("explore")}
         </a>
       </div>
     </main>

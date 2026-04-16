@@ -54,7 +54,7 @@ export function MobileNav({ links }: { links: NavLink[] }) {
                   href={link.href}
                   className="font-bold [font-family:var(--ff-sans-cond)] uppercase tracking-[2.7px] text-white no-underline"
                 >
-                  <span className="mr-2 font-bold">{link.number}</span>
+                  <span className="mr-2 font-bold" aria-hidden="true">{link.number}</span>
                   {link.label}
                 </Link>
               </li>
