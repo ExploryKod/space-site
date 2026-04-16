@@ -1,13 +1,7 @@
 {
-  "title": "Clean App — Next.js template",
-  "description": "Auth-first Next.js starter with TypeScript, Prisma, and a modular layout — ready to extend.",
+  "title": "Space Tourism — Multi-page website",
+  "description": "Plan your journey beyond Earth with destinations, crew details, and space technology highlights.",
   "tagline": "Ship features faster with a clear structure.",
-  "home": {
-    "metaTitle": "Home",
-    "heroTitle": "Next.js Clean Architectured Template",
-    "heroLead": "Reusable starter with registration and login flows already wired.",
-    "heroHint": "Use the header navigation to access authentication pages and start adapting the template to your project."
-  },
   "header": {
     "brand": "CleanApp",
     "home": "Home",

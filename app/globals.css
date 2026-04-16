@@ -4,143 +4,483 @@
 
 :root {
   /* Layout (design sizes; test 320px to large screens for WCAG) */
-  --width-mobile: 375px;
-  --width-desktop: 1440px;
+  --width-sm: 375px;
+
+  --width-md: 48em;
+  --width-lg: 1440px;
+
   --header-height: 0px;
   --footer-height: 0px;
-  --banner-height: 200px;
+  
+  /* colors */
+  --color-dark: 230 35% 7%;
+  --color-light: 231 77% 90%;
+  --color-white: 0 0% 100%;
+  
+  /* font-sizes */
+  --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+  --fs-800: 3.5rem;
+  --fs-700: 1.5rem;
+  --fs-600: 1rem;
+  --fs-500: 1.75rem;
+  --fs-400: 0.9375rem;
+  --fs-300: 1rem;
+  --fs-200: 0.875rem;
+  
+  /* font-families */
+  --ff-serif: var(--font-bellefair), serif;
+  --ff-sans-cond: var(--font-barlow-condensed), sans-serif;
+  --ff-sans-normal: var(--font-barlow), sans-serif;
+}
 
-  /* Colors from style guide */
-  --gray-950: hsl(0, 0%, 17%);
-  --gray-400: hsl(0, 0%, 58%);
 
-  /* Base background (you can adjust later if needed) */
-  --background: #f6f6f6;
+@media (min-width: 35em) {
+  :root {
+      --fs-800: 5rem;
+      --fs-700: 2.5rem;
+      --fs-600: 1.5rem;
+      --fs-400: 1rem;
+  }
+}
 
-  /* Typography – Rubik family and weights from style guide */
-  --font-rubik: "Rubik", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-bold: 700;
-
-  /* Convenience aliases for app usage */
-  --font-heading: var(--font-rubik);
-  --font-body: var(--font-rubik);
-  --font-size-body: 1.125rem; /* 18px text input size */
-
-  /* Font sizes (can be refined later) */
-  --heading-1: 2.5rem;
-  --heading-2: 2rem;
-  --paragraph: 1.125rem;
+@media (min-width: var(--width-md)) {
+  :root {
+      /* font-sizes */
+      --fs-800: 6.25rem;
+      --fs-700: 3.5rem;
+      --fs-600: 2rem;
+      --fs-400: 1.125rem;
+  }
 }
 
 @theme inline {
-/* Font families → font-heading, font-body */
---font-heading: var(--font-heading);
---font-body: var(--font-body);
---text-heading-1: var(--heading-1);
---text-heading-2: var(--heading-2);
---text-paragraph: var(--paragraph);
-
-/* Colors */
---color-gray-950: var(--gray-950);
---color-gray-400: var(--gray-400);
---button-hover-color: var(--gray-400);
-/* Body font size → text-body */
---text-body: var(--font-size-body);
 
 --header-height: var(--header-height);
+--color-dark: var(--color-dark);
+--color-light: var(--color-light);
+--color-white: var(--color-white);
+--font-size-900: var(--fs-900);
+--font-size-800: var(--fs-800);
+--font-size-700: var(--fs-700);
+--font-size-600: var(--fs-600);
+--font-size-500: var(--fs-500);
+--font-size-400: var(--fs-400);
+--font-size-300: var(--fs-300);
+--font-size-200: var(--fs-200);
+--font-family-serif: var(--ff-serif);
+--font-family-sans-cond: var(--ff-sans-cond);
+--font-family-sans-normal: var(--ff-sans-normal);
 }
 
-/* Dark theme: reserved for later – no styling applied yet */
+
+
+/* -----------------------------------------------------------------------------
+Reset and accessibility
+----------------------------------------------------------------------------- */
+
+/* https://piccalil.li/blog/a-modern-css-reset/ */
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Reset margins */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+figure,
+picture {
+    margin: 0; 
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-weight: 400;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sr-only {
+  position: absolute; 
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px; 
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}
+
+.skip-to-main {
+  position: absolute;
+  z-index: 9999;
+  background: hsl( var(--color-white) );
+  color: hsl( var(--color-dark) );
+  padding: .5em 1em;
+  margin-inline: auto;
+  transform: translateY(-100%);
+  transition: transform 250ms ease-in;
+}
+
+.skip-to-main:focus {
+  transform: translateY(0);
+}
 
 /* -----------------------------------------------------------------------------
    Base & layout
    ----------------------------------------------------------------------------- */
+body {
+  font-family: var(--ff-sans-normal);
+  font-size: var(--fs-400);
+  color: hsl( var(--color-white) );
+  background-color: hsl( var(--color-dark) );
+  line-height: 1.5;
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  /* background image settings common to all pages */
+  background-size: cover;
+  background-position: bottom center;
+
+  overflow-x: hidden;
+}
 
 /* Header height – use var(--header-height) for layout/positioning */
 .header-height {
   min-height: var(--header-height);
 }  
 
-/* Footer block – dark cyan background, white text */
-.footer-block {
-  @apply bg-cyan-300 text-white pt-0 pb-10;
+.flex {
+  display: flex;
+  gap: var(--gap, 1rem);
 }
 
-.section-container, .header-container, .footer-container {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4;
+.grid {
+  display: grid;
+  gap: var(--gap, 1rem);
 }
 
-.section-container-fluid {
-  @apply w-full mx-auto;
+.flow > *:where(:not(:first-child)) {
+  margin-top: var(--flow-space, 1rem);
+}
+
+.container {
+  padding-inline: 2em;
+  margin-inline: auto;
+  max-width: 80rem;
+}
+
+.main-container {
+  display: grid;
+  text-align: center;
+  place-items: center;
+  padding-inline: 2rem;
+}
+
+
+/* use em for safari compatibility */
+@media (min-width: 45em) {
+  .main-container {
+    column-gap: var(--container-gap, 2rem);
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr);
+  }
+
+  .main-container > *:first-child {
+      grid-column: 2;
+      outline: 1px solid red;
+  }
+
+  .main-container > *:last-child {
+      grid-column: 3;
+      outline: 1px solid yellow;
+  }
+
+  .main-container.main-container--bottom {
+    padding-bottom: max(6rem, 15vh);
+    align-content: end;
+  } 
+}
+
+
+/* ----------------------------- */
+/* Page specific layout     */
+/* ----------------------------- */
+
+/* home */
+.page-home {
+  background-image: url(/home/background-home-mobile.jpg);
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 35rem) {
+  .page-home {
+      background-position: center center;
+      background-image: url(/home/background-home-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .page-home {
+      background-image: url(/home/background-home-desktop.jpg);
+  }
+}
+
+
+/* destination */
+.destination {
+  background-image: url(/destination/background-destination-mobile.jpg);
+}
+
+@media (min-width: 35rem) {
+  .destination {
+      background-position: center center;
+      background-image: url(/destination/background-destination-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .destination {
+      background-image: url(/destination/background-destination-desktop.jpg);
+  }
+} 
+
+/* -----------------------------------------------------------------------------
+Colors
+----------------------------------------------------------------------------- */
+
+.bg-dark { background-color: hsl( var(--color-dark) );}
+.bg-accent { background-color: hsl( var(--color-light) );}
+.bg-white { background-color: hsl( var(--color-white) );}
+
+.text-dark { color: hsl( var(--color-dark) );}
+.text-accent { color: hsl( var(--color-light) );}
+.text-white { color: hsl( var(--color-white) );}
+
+/* -----------------------------------------------------------------------------
+Typography
+----------------------------------------------------------------------------- */
+
+.ff-serif { font-family: var(--font-bellefair), serif; } 
+.ff-sans-cond { font-family: var(--font-barlow-condensed), sans-serif; } 
+.ff-sans-normal { font-family: var(--font-barlow), sans-serif; } 
+
+.letter-spacing-1 { letter-spacing: 4.75px; } 
+.letter-spacing-2 { letter-spacing: 2.7px; } 
+.letter-spacing-3 { letter-spacing: 2.35px; } 
+
+.fs-900 { font-size: var(--fs-900); }
+.fs-800 { font-size: var(--fs-800); }
+.fs-700 { font-size: var(--fs-700); }
+.fs-600 { font-size: var(--fs-600); }
+.fs-500 { font-size: var(--fs-500); }
+.fs-400 { font-size: var(--fs-400); }
+.fs-300 { font-size: var(--fs-300); }
+.fs-200 { font-size: var(--fs-200); }
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+    line-height: 1.1;
+}
+
+.numbered-title {
+    font-family: var(--ff-sans-cond);
+    font-size: var(--fs-500);
+    text-transform: uppercase;
+    letter-spacing: 4.72px; 
+}
+
+.numbered-title span {
+    margin-right: .5em;
+    font-weight: 700;
+    color: hsl( var(--color-white) / .25);
 }
 
 /* -----------------------------------------------------------------------------
    Components – consistent patterns (use these classes in the app)
    ----------------------------------------------------------------------------- */
 
-/* Common styles for all buttons */
-.btn-common-styles {
-  @apply text-base font-bold font-body transition-all duration-300 motion-reduce:duration-0 ease-in-out;
+/* Space button */
+
+.space-button {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 2em;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  text-decoration: none;
 }
 
-/* Primary CTA – pink background, white text, rounded */
-.btn-primary {
-  @apply rounded-full shadow-md cursor-pointer;
-  @apply px-15 py-4 bg-pink-500 text-white opacity-100;
-}
-.btn-primary:hover {
-  @apply opacity-60;
-}
-.btn-primary:focus-visible {
-  @apply ring-2 ring-offset-2 ring-pink-500 outline-none;
-}
-
-/* Secondary CTA – white bg, no colored border, dark text */
-.btn-secondary {
-  @apply bg-white border border-transparent rounded-full shadow-sm cursor-pointer;
-  @apply px-15 py-3 text-black;
-}
-.btn-secondary:hover {
-  @apply text-blue-500;
-}
-.btn-secondary:focus-visible {
-  @apply ring-2 ring-offset-2 ring-blue-500 outline-none;
+.space-button::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: hsl( var(--color-white) / .1);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 500ms linear, transform 750ms ease-in-out;
 }
 
-/* Background pattern – plain CSS so background-size: cover is not overridden by Tailwind shorthand */
-.bg-pattern {
-  background-image: url(/patterns/pattern-bg-mobile.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+.space-button:hover::after,
+.space-button:focus::after {
+  opacity: 1;
+  transform: scale(1.5);
 }
-@media (min-width: 640px) {
-  .bg-pattern {
-    background-image: url(/patterns/pattern-bg-desktop.png);
-    background-size: cover;
+
+/* Primary Navigation */
+
+.logo {
+  margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-navigation {
+  @apply list-none px-2 py-0 m-0 z-10 flex flex-row gap-x-8;
+  /* Set the gap between logo and nav bar */
+  --gap: clamp(1.5rem, 5vw, 3.5rem);
+  /* Set the gap between nav text and its underlined indicator */
+  --underline-gap: 2rem;
+  background-color: hsl( var(--color-dark) / .9);
+  transition: transform 500ms ease-in-out;
+}
+
+
+@media (35em <= width < 45em) {
+  .primary-navigation a > span {
+    display: none;
   }
 }
 
-/* Infos Card – vertical separator on the right, 80% height (omit on last card via last:after:hidden) */
-.infos-card-sep {
-  @apply relative;
-}
-
-@media (min-width: 768px) {
-  .infos-card-sep::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 10%;
-    bottom: 10%;
-    width: 1px;
-    background-color: hsl(0, 0%, 58%); /* --gray-400 from design system */
+@media (min-width: 35em) {
+  .primary-navigation {
+      padding-inline: clamp(3rem, 5vw, 7rem);
   }
 }
+
+@media (min-width: 45em) {
+
+    .primary-header::after {
+      content: '';
+      display: block;
+      position: relative;
+      height: 1px;
+      width: 100%;
+      margin-right: -2.5rem;
+      background:  hsl( var(--color-white) / .25);
+      order: 1;
+    }
+
+    .header-nav {
+        order: 2;
+    }
+
+  .primary-navigation {
+      margin-block: 2rem;
+  }
+}
+
+
+@supports (backdrop-filter: blur(1.5rem)) {
+  .primary-navigation {
+    background-color: hsl( var(--color-white) / 0.05);
+    backdrop-filter: blur(1.5rem);
+  }
+}
+
+.mobile-nav-toggle {
+  display: none;
+}
+
+@media (max-width: 45rem) {
+  .primary-navigation {
+    --underline-gap: .5rem;
+    @apply fixed inset-[0_0_0_20%] m-0 flex flex-col list-none px-8 pt-[min(20rem,10vh)];
+    transform: translateX(100%);
+  }
+
+  .primary-navigation.underline-indicators > .active {
+    border: 0;
+  }
+
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-toggle {
+    @apply block absolute right-4 top-4 z-20 bg-transparent cursor-pointer;
+    background-image: url("/shared/icon-hamburger.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    aspect-ratio: 1;
+  }
+  
+  /* Focus styles only on focus-visible nav without sacrificing accessibility */
+  .mobile-nav-toggle:focus-visible {
+    outline: 5px solid red;
+    outline-offset: 5px;
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url("/shared/icon-close.svg");
+  }
+}
+
+/* Underline indicators : used for navigation items */
+.underline-indicators > * {
+  cursor: pointer;
+  padding: var(--underline-gap, 1rem) 0;
+  border: 0;
+  border-bottom: .2rem solid hsl( var(--color-white) / 0 );
+}
+
+.underline-indicators > *:hover,
+.underline-indicators > *:focus {
+  border-color: hsl( var(--color-white) / .5);
+}
+
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
+  color: hsl( var(--color-white) / 1);
+  border-color: hsl( var(--color-white) / 1); 
+}
+
+
 
 /** Image Container */
 

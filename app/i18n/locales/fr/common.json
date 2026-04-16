@@ -1,13 +1,7 @@
 {
-  "title": "Clean App — modèle Next.js",
-  "description": "Base Next.js orientée authentification : TypeScript, Prisma et architecture modulaire — prête à être étendue.",
+  "title": "Tourisme spatial — Site multipage",
+  "description": "Planifiez votre voyage au-delà de la Terre avec des destinations, des équipages et des technologies spatiales.",
   "tagline": "Livrez plus vite avec une structure claire.",
-  "home": {
-    "metaTitle": "Accueil",
-    "heroTitle": "Modèle Next.js - Clean architecture",
-    "heroLead": "Base réutilisable avec inscription et connexion.",
-    "heroHint": "Utilisez la navigation du header pour accéder aux pages d’authentification et adapter le modèle à votre projet."
-  },
   "header": {
     "brand": "CleanApp",
     "home": "Accueil",
