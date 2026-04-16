@@ -1,1 +1,1 @@
-export type Dependencies = Record<string, never>;
+export type Dependencies = object;
