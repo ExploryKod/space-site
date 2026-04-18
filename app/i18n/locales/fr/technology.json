@@ -1,0 +1,30 @@
+{
+  "metaTitle": "Technologie",
+  "numberedTitle": "Les technologies spatiales",
+  "labels": {
+    "terminology": "La terminologie..."
+  },
+  "items": {
+    "launch-vehicle": {
+      "name": "Véhicule de lancement",
+      "description": "Un véhicule de lancement, ou fusée porteuse, est un engin propulsé par fusée utilisé pour transporter une charge utile depuis la surface de la Terre vers l'espace, généralement en orbite terrestre ou au-delà. Notre fusée porteuse WEB-X est la plus puissante actuellement en service. Avec ses 150 mètres de hauteur, c'est un spectacle vraiment impressionnant sur l'aire de lancement !",
+      "portrait": "/technology/image-launch-vehicle-portrait.jpg",
+      "landscape": "/technology/image-launch-vehicle-landscape.jpg",
+      "alt": "Véhicule de lancement sur une aire de lancement"
+    },
+    "spaceport": {
+      "name": "Port spatial",
+      "description": "Un port spatial, ou cosmodrome, est un site de lancement (ou de réception) de vaisseaux spatiaux, par analogie avec un port maritime pour les navires ou un aéroport pour les avions. Situé à Cape Canaveral, notre port spatial est idéalement placé pour tirer parti de la rotation de la Terre lors des lancements.",
+      "portrait": "/technology/image-spaceport-portrait.jpg",
+      "landscape": "/technology/image-spaceport-landscape.jpg",
+      "alt": "Infrastructure de lancement d'un port spatial"
+    },
+    "space-capsule": {
+      "name": "Capsule spatiale",
+      "description": "Une capsule spatiale est un vaisseau, souvent habité, qui utilise une capsule de rentrée atmosphérique à corps émoussé pour revenir dans l'atmosphère terrestre sans ailes. Notre capsule est l'endroit où vous passerez votre temps pendant le vol. Elle comprend une salle de sport spatiale, un cinéma et de nombreuses autres activités pour vous divertir.",
+      "portrait": "/technology/image-space-capsule-portrait.jpg",
+      "landscape": "/technology/image-space-capsule-landscape.jpg",
+      "alt": "Capsule spatiale avec vue intérieure et coque"
+    }
+  }
+}
