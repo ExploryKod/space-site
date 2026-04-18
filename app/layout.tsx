@@ -4,6 +4,7 @@ import { initServerI18next } from "next-i18next/server";
 import i18nConfig from "@/i18n.config";
 import "@/app/globals.css";
 import { BodyPageClass } from "@/app/_components/layout/BodyPageClass";
+import { toBcp47, toOpenGraphLocale } from "@/lib/locale-tags";
 
 initServerI18next(i18nConfig);
 
@@ -63,7 +64,9 @@ export const metadata: Metadata = {
     title: siteName,
     description: siteDescription,
     type: "website",
-    locale: "en_US",
+    locale: toOpenGraphLocale(
+      toBcp47(i18nConfig.fallbackLng, i18nConfig.fallbackLng),
+    ),
     url: "/",
   },
 };
@@ -73,11 +76,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const lang = i18nConfig.fallbackLng ?? "en";
+  const htmlLang = toBcp47(
+    i18nConfig.fallbackLng,
+    i18nConfig.fallbackLng,
+  );
 
   return (
     <html
-      lang={lang}
+      lang={htmlLang}
       className={`${barlow.variable} ${barlowCondensed.variable} ${bellefair.variable} overflow-x-hidden antialiased`}
       suppressHydrationWarning
     >
@@ -85,7 +91,10 @@ export default async function RootLayout({
         className={`${barlow.className} ${barlowCondensed.variable} ${bellefair.variable} page-home`}
         suppressHydrationWarning
       >
-        <BodyPageClass supportedLngs={i18nConfig.supportedLngs} />
+        <BodyPageClass
+          supportedLngs={i18nConfig.supportedLngs}
+          fallbackLng={i18nConfig.fallbackLng}
+        />
         <a href="#main" className="skip-to-main">Skip to content</a>
         {children}
       </body>

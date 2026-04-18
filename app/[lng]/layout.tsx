@@ -9,7 +9,6 @@ import frCommon from "@/app/i18n/locales/fr/common.json";
 import frConnexion from "@/app/i18n/locales/fr/connexion.json";
 import { ThemeProvider } from "@modules/app/react/ThemeProvider";
 import { SpHeader } from "@/app/_components/layout/SpHeader";
-import { Footer } from "@modules/app/react/layout/Footer";
 
 type LngLayoutProps = {
   children: React.ReactNode;
@@ -49,7 +48,6 @@ export default async function LngLayout({ children, params }: LngLayoutProps) {
       >
         <SpHeader />
         {children}
-        
       </I18nProvider>
     </ThemeProvider>
   );
