@@ -25,7 +25,7 @@ export default async function Home({ params }: PageProps) {
       <div className="flex flex-col items-center">
         <h1 className="text-accent fs-500 ff-sans-cond uppercase letter-spacing-1 text-center md:text-left">
           {t("preTitle")}
-          <span className={`block fs-900 ff-serif text-white text-center md:text-left ${lng === "fr" ? "fs-900-fr" : "fs-900"}`}>
+          <span className={`block fs-900 ff-serif text-white whitespace-nowrap text-center md:text-left ${lng === "fr" ? "fs-900-fr" : "fs-900"}`}>
             {t("heroTitle")}
           </span>
         </h1>
